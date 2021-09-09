@@ -122,12 +122,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Frej\Desktop\Libraries\SDL2-2.0.14\include;C:\Users\Frej\Desktop\Libraries\glew-2.2.0\include;C:\Users\Frej\Desktop\Libraries\stb_image;C:\Users\Frej\Desktop\Libraries\glm;C:\Users\Frej\Desktop\Libraries\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\BrugerData\Skrivebord\Libraries\SDL2-2.0.16\include;D:\BrugerData\Skrivebord\Libraries\glew-2.1.0\include\;D:\BrugerData\Skrivebord\Libraries\stb_image\;D:\BrugerData\Skrivebord\Libraries\glm\;D:\BrugerData\Skrivebord\Libraries\assimp\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Frej\Desktop\Libraries\SDL2-2.0.14\lib\x64;C:\Users\Frej\Desktop\Libraries\glew-2.2.0\lib\Release\x64;C:\Users\Frej\Desktop\Libraries\assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\BrugerData\Skrivebord\Libraries\SDL2-2.0.16\lib\x64;D:\BrugerData\Skrivebord\Libraries\glew-2.1.0\lib\Release\x64;D:\BrugerData\Skrivebord\Libraries\assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2main.lib;SDL2.lib;Opengl32.lib;glew32.lib;glu32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
