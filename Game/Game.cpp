@@ -111,6 +111,7 @@ void Game::Init()
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
 	_shader.Init("shaders/model_loading.vs", "shaders/model_loading.fs");
+	//_shader.Init("shaders/models/shader.vs", "shaders/models/shader.fs");
 	_lightShader.Init("shaders/light.vs", "shaders/light.fs");
 
 	// Generates OpenGL objects
@@ -146,16 +147,17 @@ void Game::Init()
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe mode
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe mode
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_GL_SetSwapInterval(1);
 
 	// Initialize textures
 	stbi_set_flip_vertically_on_load(true);
 	//_texture.Init();
 	//_textureMap.Init();
 
-	teapot.init("models/teapot.obj");
+	teapot.init("models/head.obj");
 
 	_shader.Use();
 
@@ -176,7 +178,7 @@ void Game::GameLoop()
 
 		TakeInput();
 		Draw();
-		SDL_Delay(3);
+		SDL_Delay(5);
 
 		SDL_GL_SwapWindow(_window);
 	}
@@ -239,12 +241,15 @@ void Game::Draw()
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+	model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
 	_shader.setMat4("model", model);
 	teapot.Draw(_shader);
 
-	model = glm::scale(model, glm::vec3(5.0f));
-
+	/*model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+	glBindVertexArray(_cubeVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 36);*/
 
 	/*glBindVertexArray(_cubeVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
