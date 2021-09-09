@@ -142,11 +142,10 @@ void Game::Init()
 	glEnableVertexAttribArray(0);
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe mode
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe mode
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
@@ -158,6 +157,8 @@ void Game::Init()
 	teapot.init("models/teapot.obj");
 
 	_shader.Use();
+	_shader.setInt("material.diffuse", 0);
+	_shader.setInt("material.specular", 1);
 
 	GameLoop();
 }
@@ -176,7 +177,6 @@ void Game::GameLoop()
 
 		TakeInput();
 		Draw();
-		SDL_Delay(3);
 
 		SDL_GL_SwapWindow(_window);
 	}
@@ -193,8 +193,7 @@ void Game::GameLoop()
 
 void Game::Draw()
 {
-	glClearColor(0.005f, 0.005f, 0.005f, 1.0f); // BLACK
-	//glClearColor(0.995f, 0.995f, 0.995f, 1.0f); // WHITE
+	glClearColor(0.005f, 0.005f, 0.005f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	/*glActiveTexture(GL_TEXTURE1);
@@ -202,21 +201,19 @@ void Game::Draw()
 
 	float colorG = 1.0f;
 
-	float lightX = 2.0f * sin(timeValue) * 2;
-	float lightY = 1.5f * sin(timeValue) * 2;
-	float lightZ = 2.0f * cos(timeValue) * 2;
+	float lightX = 1.5f * sin(timeValue);
+	float lightY = 1.5f * sin(timeValue);
+	float lightZ = 1.5f * cos(timeValue);
 	glm::vec3 lightPos = glm::vec3(lightX, lightY, lightZ);
-	glm::vec3 lightColor = glm::vec3(lightX, colorG, lightZ);
-	//glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	//glm::vec3 lightColor = glm::vec3(lightX, colorG, lightZ);
+	glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	_shader.Use();
-	//_shader.setFloat("light.constant", 1.0f);
-	//_shader.setFloat("light.linear", 0.09f);
-	//_shader.setFloat("light.quadratic", 0.032f);
+	//_lightShader.setFloat("light.constant", 1.0f);
+	//_lightShader.setFloat("light.linear", 0.09f);
+	//_lightShader.setFloat("light.quadratic", 0.032f);
 
-	_shader.setVec3("lightPos", lightPos);
-	_shader.setVec3("lightColor", lightColor);
-	_shader.setVec3("viewPos", _camera.Position);
+	//_lightShader.setVec3("light.position", lightPos);
 	//_lightShader.setVec3("light.position", lightPos); // USING DIRECTION LIGHTS INSTEAD
 	_shader.setVec3("viewPos", _camera.Position);
 
@@ -243,9 +240,6 @@ void Game::Draw()
 	_shader.setMat4("model", model);
 	teapot.Draw(_shader);
 
-	model = glm::scale(model, glm::vec3(5.0f));
-
-
 	/*glBindVertexArray(_cubeVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
@@ -258,7 +252,7 @@ void Game::Draw()
 		_shader.setMat4("model", model);
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-	}*/
+	}
 
 	_lightShader.Use();
 	_lightShader.setMat4("projection", projection);
@@ -272,7 +266,7 @@ void Game::Draw()
 	_lightShader.setMat4("model", model);
 
 	glBindVertexArray(_lightVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDrawArrays(GL_TRIANGLES, 0, 36);*/
 }
 
 void Game::TakeInput()
