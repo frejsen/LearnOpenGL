@@ -142,22 +142,27 @@ void Game::Init()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
+	// Depth buffer
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
+
+	glClearColor(0.005f, 0.005f, 0.005f, 1.0f); // BLACK
+	//glClearColor(0.995f, 0.995f, 0.995f, 1.0f); // WHITE
+
+	// Transparency
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe mode
+	// Wireframe mode
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GL_SetSwapInterval(1);
 
-	// Initialize textures
+	// Flip textures on startup since OpenGL flips them initially
 	stbi_set_flip_vertically_on_load(true);
-	//_texture.Init();
-	//_textureMap.Init();
 
-	teapot.init("models/head.obj");
+	teapot.init("models/teapot.obj");
 
 	_shader.Use();
 
@@ -178,7 +183,7 @@ void Game::GameLoop()
 
 		TakeInput();
 		Draw();
-		SDL_Delay(5);
+		SDL_Delay(3);
 
 		SDL_GL_SwapWindow(_window);
 	}
@@ -195,42 +200,24 @@ void Game::GameLoop()
 
 void Game::Draw()
 {
-	glClearColor(0.005f, 0.005f, 0.005f, 1.0f); // BLACK
-	//glClearColor(0.995f, 0.995f, 0.995f, 1.0f); // WHITE
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	/*glActiveTexture(GL_TEXTURE1);
-	texture2.Draw();*/
-
+	// Light position/color variables
 	float colorG = 1.0f;
-
 	float lightX = 2.0f * sin(timeValue) * 2;
 	float lightY = 1.5f * sin(timeValue) * 2;
 	float lightZ = 2.0f * cos(timeValue) * 2;
 	glm::vec3 lightPos = glm::vec3(lightX, lightY, lightZ);
-	glm::vec3 lightColor = glm::vec3(lightX, colorG, lightZ);
-	//glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	//glm::vec3 lightColor = glm::vec3(lightX, colorG, lightZ);
+	glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	_shader.Use();
-	//_shader.setFloat("light.constant", 1.0f);
-	//_shader.setFloat("light.linear", 0.09f);
-	//_shader.setFloat("light.quadratic", 0.032f);
 
+	// Set matrices
 	_shader.setVec3("lightPos", lightPos);
 	_shader.setVec3("lightColor", lightColor);
 	_shader.setVec3("viewPos", _camera.Position);
-	//_lightShader.setVec3("light.position", lightPos); // USING DIRECTION LIGHTS INSTEAD
 	_shader.setVec3("viewPos", _camera.Position);
-
-	glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
-	glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
-
-	//_shader.setVec3("light.ambient", ambientColor);
-	//_shader.setVec3("light.diffuse", diffuseColor);
-	//_shader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
-
-	//_shader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-	//_shader.setFloat("material.shininess", 64.0f);
 
 	// pass projection matrix to shader (note that in this case it could change every frame)
 	glm::mat4 projection = glm::perspective(glm::radians(_camera.Fov), (float)_SCR_WIDTH / (float)_SCR_HEIGHT, 0.1f, 100.0f);
@@ -241,35 +228,24 @@ void Game::Draw()
 
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
-	model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
+	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 	_shader.setMat4("model", model);
 	teapot.Draw(_shader);
 
-	/*model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+	/*glm::mat4 outsideModel = glm::mat4(1.0f);
+	outsideModel = glm::mat4(1.0f);
+	outsideModel = glm::translate(outsideModel, glm::vec3(0.0f, 0.0f, 0.0f));
+	outsideModel = glm::scale(outsideModel, glm::vec3(35.0f, 35.0f, 35.0f));
+	_lightShader.setMat4("model", outsideModel);
 	glBindVertexArray(_cubeVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 36);*/
-
-	/*glBindVertexArray(_cubeVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
-
-	for (unsigned int i = 0; i < 10; i++)
-	{
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, cubePositions[i]);
-		float angle = 20.0f * i;
-		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-		_shader.setMat4("model", model);
-
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-	}*/
 
 	_lightShader.Use();
 	_lightShader.setMat4("projection", projection);
 	_lightShader.setMat4("view", view);
 	_lightShader.setVec3("lightColor", lightColor);
 
+	// Render light cube
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, lightPos);
 	model = glm::scale(model, glm::vec3(0.2f));

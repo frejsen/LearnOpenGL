@@ -11,6 +11,12 @@ void Model::Draw(Shader& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 		meshes[i].draw(shader);
+
+    // Makes obj files that have no corresponding shader still have lighting
+    if (textures_loaded.size() == 0)
+        shader.setBool("useTexture", false);
+    else
+        shader.setBool("useTexture", true);
 }
 
 void Model::loadModel(string const &path)

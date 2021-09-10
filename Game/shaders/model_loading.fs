@@ -10,6 +10,7 @@ uniform vec3 lightColor;
 uniform vec3 viewPos;
 
 uniform sampler2D texture_diffuse1;
+uniform bool useTexture;
 
 void main()
 {
@@ -33,5 +34,9 @@ void main()
     vec3 specular = specularStrength * spec * lightColor;
 
     vec3 result = (ambient + diffuse + specular) * vec3(1.0, 1.0, 1.0); // last vector is color (for now just white)
-	FragColor = vec4(result, 1.0);
+	if(useTexture) {
+		FragColor = vec4(result, 1.0) * texture(texture_diffuse1, TexCoords);
+	} else {
+		FragColor = vec4(result, 1.0);
+	}
 }
