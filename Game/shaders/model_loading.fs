@@ -11,12 +11,11 @@ uniform vec3 viewPos;
 
 uniform sampler2D texture_diffuse1;
 uniform bool useTexture;
+uniform int levels;
+uniform bool toonEnabled;
 
 void main()
 {
-    //FragColor = texture(texture_diffuse1, TexCoords);
-	
-	
 	float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * lightColor;
 	
@@ -24,6 +23,12 @@ void main()
 	vec3 norm = normalize(Normal);
     vec3 lightDir = normalize(lightPos - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
+	
+	float level = floor(diff * levels);
+	if (toonEnabled) {
+		diff = level / levels;
+	}
+	
     vec3 diffuse = diff * lightColor;
 	
 	// specular
@@ -31,9 +36,15 @@ void main()
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
+	
+	if (toonEnabled) {
+		level = floor(spec * levels);
+		spec = level / (levels / 2); // makes specular lighting less intensive than diffuse
+	}
+	
     vec3 specular = specularStrength * spec * lightColor;
 
-    vec3 result = (ambient + diffuse + specular) * vec3(1.0, 1.0, 1.0); // last vector is color (for now just white)
+	vec3 result = (ambient + diffuse + specular) * vec3(1.0, 1.0, 1.0); // last vector is color (for now just white)
 	if(useTexture) {
 		FragColor = vec4(result, 1.0) * texture(texture_diffuse1, TexCoords);
 	} else {

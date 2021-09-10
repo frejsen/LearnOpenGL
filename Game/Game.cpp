@@ -165,6 +165,8 @@ void Game::Init()
 	teapot.init("models/teapot.obj");
 
 	_shader.Use();
+	_shader.setBool("toonEnabled", false);
+	_shader.setInt("levels", 6);
 
 	GameLoop();
 }
@@ -204,9 +206,9 @@ void Game::Draw()
 
 	// Light position/color variables
 	float colorG = 1.0f;
-	float lightX = 2.0f * sin(timeValue) * 2;
-	float lightY = 1.5f * sin(timeValue) * 2;
-	float lightZ = 2.0f * cos(timeValue) * 2;
+	float lightX = (2.0f * sin(timeValue) * 2);
+	float lightY = (1.5f * sin(timeValue) * 2);
+	float lightZ = (2.0f * cos(timeValue) * 2);
 	glm::vec3 lightPos = glm::vec3(lightX, lightY, lightZ);
 	//glm::vec3 lightColor = glm::vec3(lightX, colorG, lightZ);
 	glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -219,16 +221,16 @@ void Game::Draw()
 	_shader.setVec3("viewPos", _camera.Position);
 	_shader.setVec3("viewPos", _camera.Position);
 
-	// pass projection matrix to shader (note that in this case it could change every frame)
 	glm::mat4 projection = glm::perspective(glm::radians(_camera.Fov), (float)_SCR_WIDTH / (float)_SCR_HEIGHT, 0.1f, 100.0f);
-	_shader.setMat4("projection", projection);
-	// camera/view transformation
 	glm::mat4 view = _camera.GetViewMatrix();
+	_shader.setMat4("projection", projection);
 	_shader.setMat4("view", view);
 
+	// Model loading
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+	model = glm::translate(model, glm::vec3(0.0f, 1.0f, 0.0f)); // translate it down so it's at the center of the scene
 	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+
 	_shader.setMat4("model", model);
 	teapot.Draw(_shader);
 
@@ -258,15 +260,22 @@ void Game::Draw()
 
 void Game::TakeInput()
 {
-	const Uint8* keystate = SDL_GetKeyboardState(NULL);
-	if (keystate[SDL_SCANCODE_W])
-		_camera.Move(FORWARD, _dt);
-	if (keystate[SDL_SCANCODE_S])
-		_camera.Move(BACKWARD, _dt);
-	if (keystate[SDL_SCANCODE_A])
-		_camera.Move(LEFT, _dt);
-	if (keystate[SDL_SCANCODE_D])
-		_camera.Move(RIGHT, _dt);
+	if (!_pause)
+	{
+		const Uint8* keystate = SDL_GetKeyboardState(NULL);
+		if (keystate[SDL_SCANCODE_W])
+			_camera.Move(FORWARD, _dt);
+		if (keystate[SDL_SCANCODE_S])
+			_camera.Move(BACKWARD, _dt);
+		if (keystate[SDL_SCANCODE_A])
+			_camera.Move(LEFT, _dt);
+		if (keystate[SDL_SCANCODE_D])
+			_camera.Move(RIGHT, _dt);
+		if (keystate[SDL_SCANCODE_SPACE])
+			_camera.Move(UP, _dt);
+		if (keystate[SDL_SCANCODE_LSHIFT] || keystate[SDL_SCANCODE_RSHIFT])
+			_camera.Move(DOWN, _dt);
+	}
 
 	SDL_Event event;
 	while (SDL_PollEvent(&event))

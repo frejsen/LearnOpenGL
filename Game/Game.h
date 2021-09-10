@@ -43,8 +43,6 @@ private:
 
 	glm::vec3 _lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
 
-	//Texture _texture = Texture("textures/container.png");
-	//Texture _textureMap = Texture("textures/specularmap.png");
 	Model teapot;
 
 	void Init();

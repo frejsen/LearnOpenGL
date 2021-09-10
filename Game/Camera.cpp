@@ -20,6 +20,12 @@ void Camera::Move(CameraMovement direction, float deltaTime)
 	case RIGHT:
 		Position += velocity * Right;
 		break;
+	case UP:
+		Position += velocity * WorldUp;
+		break;
+	case DOWN:
+		Position -= velocity * WorldUp;
+		break;
 	}
 }
 
