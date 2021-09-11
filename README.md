@@ -3,7 +3,7 @@
 Hey future me! :)
 
 This is a little project following along with the tutorial on [LearnOpenGL](https://www.learnopengl.com).
-The libraries are static and currently set to my desktop, so if you wanna use this in any way you're gonna have to change that.
+The solution uses dynamic libraries and they are currently set to my desktop, so if you wanna use this in any way you're gonna have to change that.
 
 If anyone by sheer chance sees this feel free to do whatever you'd like with it. :)
 
