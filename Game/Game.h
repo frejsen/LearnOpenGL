@@ -8,9 +8,14 @@
 #include <assimp/config.h>
 
 #include "Shader.h"
-#include "Texture.h"
 #include "Camera.h"
 #include "Model.h"
+
+enum class ViewMode {
+	FILL,
+	WIREFRAME,
+	POINT
+};
 
 class Game
 {
@@ -19,20 +24,24 @@ public:
 	~Game();
 
 private:
+	void Init();
+	void GameLoop();
+	void Draw();
+	void TakeInput();
+
+	SDL_Window* _window;
+	SDL_GLContext _context;
 	bool _running;
 	const int _SCR_WIDTH = 480;
 	const int _SCR_HEIGHT = 480;
-	SDL_Window* _window;
-	SDL_GLContext _context;
-	GLuint _vbo, _cubeVAO, _lightVAO, _ebo;
 	const int _FPS = 60;
 	float _dt;
 	float _lastFrame;
 	float timeValue = 0.0f;
 
 	bool _pause = false;
+	ViewMode _viewMode = ViewMode::FILL;
 
-	bool _firstMouse = true;
 	float _lastX = _SCR_WIDTH / 2.0f;
 	float _lastY = _SCR_HEIGHT / 2.0f;
 
@@ -40,15 +49,10 @@ private:
 
 	Shader _shader;
 	Shader _lightShader;
-
-	glm::vec3 _lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
+	Shader _basicShader;
 
 	Model teapot;
-
-	void Init();
-	void GameLoop();
-	void Draw();
-	void TakeInput();
+	Model sphere;
 
 };
 

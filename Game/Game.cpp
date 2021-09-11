@@ -9,75 +9,6 @@
 
 using namespace std;
 
-float vertices[] = {
-	// positions          // normals           // texture coords
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-
-	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-
-	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-	 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-	 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-	 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
-};
-
-glm::vec3 cubePositions[] = {
-	glm::vec3(0.0f,  0.0f,  0.0f),
-	glm::vec3(2.0f,  5.0f, -15.0f),
-	glm::vec3(-1.5f, -2.2f, -2.5f),
-	glm::vec3(-3.8f, -2.0f, -12.3f),
-	glm::vec3(2.4f, -0.4f, -3.5f),
-	glm::vec3(-1.7f,  3.0f, -7.5f),
-	glm::vec3(1.3f, -2.0f, -2.5f),
-	glm::vec3(1.5f,  2.0f, -2.5f),
-	glm::vec3(1.5f,  0.2f, -1.5f),
-	glm::vec3(-1.3f,  1.0f, -1.5f)
-};
-
-float coordinates[] = {
-	0.0f, 1.0f, 0.0f,
-	1.0f, 0.0f, 0.0f,
-	0.0f, 0.0f, 1.0f
-};
-
-unsigned int indices[] = {
-	0, 1, 3, // first triangle
-	1, 2, 3  // second triangle
-};
-
 Game::Game()
 {
 	Init();
@@ -113,34 +44,7 @@ void Game::Init()
 	_shader.Init("shaders/model_loading.vs", "shaders/model_loading.fs");
 	//_shader.Init("shaders/models/shader.vs", "shaders/models/shader.fs");
 	_lightShader.Init("shaders/light.vs", "shaders/light.fs");
-
-	// Generates OpenGL objects
-	glGenVertexArrays(1, &_cubeVAO);
-	glGenBuffers(1, &_vbo);
-	//glGenBuffers(1, &_ebo);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glBindVertexArray(_cubeVAO);
-
-	// position attribute
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	// normal attribute
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	// texture coords attribute
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-
-	glGenVertexArrays(1, &_lightVAO);
-	glBindVertexArray(_lightVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
+	_basicShader.Init("shaders/basic.vs", "shaders/basic.fs");
 
 	// Depth buffer
 	glEnable(GL_DEPTH_TEST);
@@ -153,9 +57,6 @@ void Game::Init()
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	// Wireframe mode
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GL_SetSwapInterval(1);
 
@@ -163,10 +64,11 @@ void Game::Init()
 	stbi_set_flip_vertically_on_load(true);
 
 	teapot.init("models/teapot.obj");
+	sphere.init("models/sphere.obj");
 
 	_shader.Use();
-	_shader.setBool("toonEnabled", false);
-	_shader.setInt("levels", 6);
+	_shader.setBool("toonEnabled", true); // Enables toon shading
+	_shader.setInt("levels", 6); // Toon shading levels
 
 	GameLoop();
 }
@@ -192,12 +94,9 @@ void Game::GameLoop()
 
 	_shader.~Shader();
 	_lightShader.~Shader();
-	glDeleteVertexArrays(1, &_lightVAO);
-	glDeleteVertexArrays(1, &_cubeVAO);
-	glDeleteBuffers(1, &_vbo);
-	//glDeleteBuffers(1, &_ebo);
 	SDL_GL_DeleteContext(_context);
 	SDL_DestroyWindow(_window);
+	SDL_Quit();
 }
 
 void Game::Draw()
@@ -207,11 +106,11 @@ void Game::Draw()
 	// Light position/color variables
 	float colorG = 1.0f;
 	float lightX = (2.0f * sin(timeValue) * 2);
-	float lightY = (1.5f * sin(timeValue) * 2);
+	float lightY = (2.0f * sin(timeValue) + 2);
 	float lightZ = (2.0f * cos(timeValue) * 2);
-	glm::vec3 lightPos = glm::vec3(lightX, lightY, lightZ);
-	//glm::vec3 lightColor = glm::vec3(lightX, colorG, lightZ);
-	glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	glm::vec3 lightPos = glm::vec3(0.0f + lightX, 0.0f + lightY, 0.0f + lightZ);
+	glm::vec3 lightColor = glm::vec3(lightX, colorG, lightZ); // Rainbow light
+	//glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
 	_shader.Use();
 
@@ -220,6 +119,12 @@ void Game::Draw()
 	_shader.setVec3("lightColor", lightColor);
 	_shader.setVec3("viewPos", _camera.Position);
 	_shader.setVec3("viewPos", _camera.Position);
+
+	glColor3f(1, 0, 0); glVertex3f(0, 0, 0); glVertex3f(10, 0, 0);
+	glColor3f(0, 1, 0); glVertex3f(0, 0, 0); glVertex3f(0, 10, 0);
+	glColor3f(0, 0, 1); glVertex3f(0, 0, 0); glVertex3f(0, 0, 10);
+	glEnd();
+	glFlush();
 
 	glm::mat4 projection = glm::perspective(glm::radians(_camera.Fov), (float)_SCR_WIDTH / (float)_SCR_HEIGHT, 0.1f, 100.0f);
 	glm::mat4 view = _camera.GetViewMatrix();
@@ -232,17 +137,13 @@ void Game::Draw()
 	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 
 	_shader.setMat4("model", model);
+
+	_shader.Use();
+
 	teapot.Draw(_shader);
 
-	/*glm::mat4 outsideModel = glm::mat4(1.0f);
-	outsideModel = glm::mat4(1.0f);
-	outsideModel = glm::translate(outsideModel, glm::vec3(0.0f, 0.0f, 0.0f));
-	outsideModel = glm::scale(outsideModel, glm::vec3(35.0f, 35.0f, 35.0f));
-	_lightShader.setMat4("model", outsideModel);
-	glBindVertexArray(_cubeVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 36);*/
-
 	_lightShader.Use();
+
 	_lightShader.setMat4("projection", projection);
 	_lightShader.setMat4("view", view);
 	_lightShader.setVec3("lightColor", lightColor);
@@ -250,31 +151,30 @@ void Game::Draw()
 	// Render light cube
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, lightPos);
-	model = glm::scale(model, glm::vec3(0.2f));
+	model = glm::scale(model, glm::vec3(0.05f));
 
 	_lightShader.setMat4("model", model);
-
-	glBindVertexArray(_lightVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 36);
+	sphere.Draw(_lightShader);
 }
 
 void Game::TakeInput()
 {
 	if (!_pause)
 	{
+		// Repeated keys
 		const Uint8* keystate = SDL_GetKeyboardState(NULL);
-		if (keystate[SDL_SCANCODE_W])
-			_camera.Move(FORWARD, _dt);
-		if (keystate[SDL_SCANCODE_S])
-			_camera.Move(BACKWARD, _dt);
-		if (keystate[SDL_SCANCODE_A])
-			_camera.Move(LEFT, _dt);
-		if (keystate[SDL_SCANCODE_D])
-			_camera.Move(RIGHT, _dt);
+		if (keystate[SDL_SCANCODE_W] || keystate[SDL_SCANCODE_UP])
+			_camera.Move(CameraMovement::FORWARD, _dt);
+		if (keystate[SDL_SCANCODE_S] || keystate[SDL_SCANCODE_DOWN])
+			_camera.Move(CameraMovement::BACKWARD, _dt);
+		if (keystate[SDL_SCANCODE_A] || keystate[SDL_SCANCODE_LEFT])
+			_camera.Move(CameraMovement::LEFT, _dt);
+		if (keystate[SDL_SCANCODE_D] || keystate[SDL_SCANCODE_RIGHT])
+			_camera.Move(CameraMovement::RIGHT, _dt);
 		if (keystate[SDL_SCANCODE_SPACE])
-			_camera.Move(UP, _dt);
+			_camera.Move(CameraMovement::UP, _dt);
 		if (keystate[SDL_SCANCODE_LSHIFT] || keystate[SDL_SCANCODE_RSHIFT])
-			_camera.Move(DOWN, _dt);
+			_camera.Move(CameraMovement::DOWN, _dt);
 	}
 
 	SDL_Event event;
@@ -291,6 +191,24 @@ void Game::TakeInput()
 					_pause = false;
 				}
 				break;
+
+			case SDLK_r:
+				// View mode
+
+				if (_viewMode == ViewMode::FILL) {
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+					_viewMode = ViewMode::WIREFRAME;
+				}
+				else if (_viewMode == ViewMode::WIREFRAME) {
+					glPolygonMode(GL_FRONT_AND_BACK, GL_POINT);
+					_viewMode = ViewMode::POINT;
+				}
+				else {
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+					_viewMode = ViewMode::FILL;
+				}
+				break;
+
 			default:
 				break;
 			}

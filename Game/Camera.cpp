@@ -8,23 +8,23 @@ void Camera::Move(CameraMovement direction, float deltaTime)
 	const Uint8* keystate = SDL_GetKeyboardState(NULL);
 
 	switch (direction) {
-	case FORWARD:
-		Position += velocity * Front;
+	case CameraMovement::FORWARD:
+		Position += velocity * Camera::Front;
 		break;
-	case BACKWARD:
-		Position -= velocity * Front;
+	case CameraMovement::BACKWARD:
+		Position -= velocity * Camera::Front;
 		break;
-	case LEFT:
-		Position -= velocity * Right;
+	case CameraMovement::LEFT:
+		Position -= velocity * Camera::Right;
 		break;
-	case RIGHT:
-		Position += velocity * Right;
+	case CameraMovement::RIGHT:
+		Position += velocity * Camera::Right;
 		break;
-	case UP:
-		Position += velocity * WorldUp;
+	case CameraMovement::UP:
+		Position += velocity * Camera::WorldUp;
 		break;
-	case DOWN:
-		Position -= velocity * WorldUp;
+	case CameraMovement::DOWN:
+		Position -= velocity * Camera::WorldUp;
 		break;
 	}
 }
@@ -59,6 +59,6 @@ void Camera::updateCameraVectors()
 	front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
 	Front = glm::normalize(front);
 	// also re-calculate the Right and Up vector
-	Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+	Right = glm::normalize(glm::cross(Camera::Front, Camera::WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 	Up = glm::normalize(glm::cross(Right, Front));
 }
